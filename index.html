@@ -21,24 +21,15 @@
             overflow: hidden;
         }
 
-        /* Создаем мягкий, размытый градиентный блик */
-        .gradient-overlay {
+        canvas {
             position: absolute;
-            width: 400px;
-            height: 400px;
-            background: radial-gradient(circle, rgba(0, 250, 255, 0.5), rgba(100, 250, 250, 0.3), rgba(150, 255, 225, 0.3));
-            border-radius: 50%;
-            filter: blur(100px);
-            animation: moveGradient 15s infinite linear;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
         }
 
-        @keyframes moveGradient {
-            0% { transform: translate(-50%, -50%) translate(10vw, 10vh); }
-            25% { transform: translate(-50%, -50%) translate(80vw, 20vh); }
-            50% { transform: translate(-50%, -50%) translate(50vw, 80vh); }
-            75% { transform: translate(-50%, -50%) translate(20vw, 50vh); }
-            100% { transform: translate(-50%, -50%) translate(10vw, 10vh); }
-        }
 
         h1 {
             font-size: 48px;
@@ -73,13 +64,47 @@
     </style>
 </head>
 <body>
-    <div class="gradient-overlay"></div>
+    <canvas id="matrixCanvas"></canvas>
     <h1>🧘‍♂️Обо мне?</h1>
     <h2>Задай мне вопрос сам. Cделай скриншот</h2>
     <div class="question-box" id="question">Вопросы...</div>
     <div class="contact">@callme_Dmitry</div>
 
     <script>
+// Матрица-анимация
+        const canvas = document.getElementById('matrixCanvas');
+        const ctx = canvas.getContext('2d');
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz@#$%^&*()';
+        const fontSize = 16;
+        const columns = canvas.width / fontSize;
+        const drops = Array(Math.floor(columns)).fill(0);
+
+        function drawMatrix() {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.fillStyle = '#00FF00'; // Зелёный цвет "Матрицы"
+            ctx.font = `${fontSize}px monospace`;
+
+            for (let i = 0; i < drops.length; i++) {
+                const text = characters[Math.floor(Math.random() * characters.length)];
+                const x = i * fontSize;
+                const y = drops[i] * fontSize;
+
+                ctx.fillText(text, x, y);
+
+                if (y > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+                drops[i]++;
+            }
+        }
+
+        setInterval(drawMatrix, 50);
         function generateQuestion() {
             const questions = [
                 'Сколько тебе лет?',
