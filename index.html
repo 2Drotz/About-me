@@ -10,7 +10,7 @@
         body {
             font-family: 'Inter', sans-serif;
             text-align: center;
-            background: linear-gradient(-45deg, #1F66FF, #0004FF, #206EFF, #00B2FF);
+            background: #121212; /* Темный фон */
             background-size: 400% 400%;
             animation: gradientAnimation 8s ease infinite;
             height: 100vh;
@@ -23,10 +23,23 @@
             overflow: hidden;
         }
 
-        @keyframes gradientAnimation {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+        /* Создаем мягкий, размытый градиентный блик */
+        .gradient-overlay {
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(0, 250, 255, 0.4), rgba(100, 250, 250, 0.7), rgba(255, 255, 225, 0.1));
+            border-radius: 50%;
+            filter: blur(100px);
+            animation: moveGradient 15s infinite linear;
+        }
+
+        @keyframes moveGradient {
+            0% { transform: translate(-50%, -50%) translate(10vw, 10vh); }
+            25% { transform: translate(-50%, -50%) translate(80vw, 20vh); }
+            50% { transform: translate(-50%, -50%) translate(50vw, 80vh); }
+            75% { transform: translate(-50%, -50%) translate(20vw, 50vh); }
+            100% { transform: translate(-50%, -50%) translate(10vw, 10vh); }
         }
 
         h1 {
@@ -58,6 +71,7 @@
     </style>
 </head>
 <body>
+    <div class="gradient-overlay"></div>
     <h1>🧘‍♂️Обо мне?</h1>
     <h2>Задай мне вопрос сам. Cделай скриншот</h2>
     <div class="question-box" id="question">Вопросы...</div>
