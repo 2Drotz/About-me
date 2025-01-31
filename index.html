@@ -29,8 +29,10 @@
             height: 100%;
             z-index: -1;
         }
-        p{
-            font-size: 24px;
+        .container {
+            display: flex;
+            align-items: center; /* Выравнивание элементов по вертикали */
+            gap: 8px; /* Отступ между элементами */
         }
 
         h1 {
@@ -67,7 +69,10 @@
 </head>
 <body>
     <canvas id="matrixCanvas"></canvas>
-    <h1><p>🔥</p>Обо мне?</h1>
+    <div class="container">
+        <p>🔥</p>
+        <h1>Обо мне?</h1>
+    </div>
     <h2>Задай мне вопрос сам. Cделай скриншот</h2>
     <div class="question-box" id="question">Вопросы...</div>
     <div class="contact">@callme_Dmitry</div>
